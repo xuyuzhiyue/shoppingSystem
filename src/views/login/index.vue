@@ -33,6 +33,7 @@
 
 <script>
 import request from "@/utils/request";
+import { login } from "@/api/user";
 export default {
   name: "LoginIndex",
   components: {},
@@ -58,7 +59,7 @@ export default {
           {
             min: 6,
             max: 12,
-            pattern:/(^[1-9]\d*$)/,
+            pattern: /(^[1-9]\d*$)/,
             message: "请输入长度在 6 到 12 个数字",
             trigger: "blur",
           },
@@ -78,18 +79,15 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.isLoading = true;
+          let data = {
+            userName: this.user.userName,
+            userPassword: this.user.userPassword,
+          };
           // 验证通过 发起请求
-          request({
-            method: "POST",
-            url: "/manageUsers",
-            data: {
-              // 获取表单数据
-              userName: this.user.userName,
-              userPassword: this.user.userPassword,
-            },
-          })
+          login(data)
             .then((res) => {
               this.isLoading = false;
+              console.log(res);
               if (res.data.message.length === 0) {
                 this.$message.error("登陆失败，请重新输入账号或密码");
                 return;
@@ -98,6 +96,13 @@ export default {
                 message: "登录成功",
                 type: "success",
               });
+              // 登录成功跳转到首页
+              this.$router.push('/')
+              // 第二种写法
+              // this.$router.push({
+                // 路由中name的作用
+              //   name:'home'
+              // })
             })
             .catch((err) => {
               console.log("登陆失败", err);
