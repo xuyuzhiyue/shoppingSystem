@@ -8,11 +8,18 @@ export const login =(data) => {
     })
 }
 
-// 获取用户信息
-export const getUserMessage =(data) => {
+// 获取所有的商品信息
+export const getUserMessage =() => {
+    return  request({
+        url: "/goodsDetail"
+    })
+}
+
+  //   获取字段goodsType对的商品名字信息进行搜索
+  export const SearchGoodsType =(data) => {
     return  request({
         method: "POST",
-        url: "/manageUsers",
+        url: "/SearchGoodsType",
         data
     })
 }

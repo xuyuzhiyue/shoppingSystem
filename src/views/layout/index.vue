@@ -62,7 +62,6 @@ export default {
     getUserMessage() {
       this.userMessage = JSON.parse(window.localStorage.getItem("user"));
       this.userdata = this.userMessage.message[0];
-      console.log(this.userMessage, "哈哈哈");
     },
     // 张开
     btnIsCollapse() {
