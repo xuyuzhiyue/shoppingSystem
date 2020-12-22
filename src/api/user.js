@@ -7,3 +7,12 @@ export const login =(data) => {
         data
     })
 }
+
+// 获取用户信息
+export const getUserMessage =(data) => {
+    return  request({
+        method: "POST",
+        url: "/manageUsers",
+        data
+    })
+}

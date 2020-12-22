@@ -87,22 +87,26 @@ export default {
           login(data)
             .then((res) => {
               this.isLoading = false;
-              console.log(res);
               if (res.data.message.length === 0) {
                 this.$message.error("登陆失败，请重新输入账号或密码");
                 return;
               }
+              // 登录成功跳转到首页
+              this.$router.push('/')
               this.$message({
                 message: "登录成功",
                 type: "success",
               });
-              // 登录成功跳转到首页
-              this.$router.push('/')
               // 第二种写法
               // this.$router.push({
                 // 路由中name的作用
               //   name:'home'
               // })
+              // 将返回的用户相关数据放在本地存储
+              // 本地存储只能存储字符串
+              // 如果需要存储对象，数组类型的数据，则把他们转为json格式字符串进行存储
+              window.localStorage.setItem('user',JSON.stringify(res.data))
+              // 获取 JSON.parse(window.localStorage.getItem('user))
             })
             .catch((err) => {
               console.log("登陆失败", err);

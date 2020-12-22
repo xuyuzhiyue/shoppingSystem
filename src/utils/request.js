@@ -6,5 +6,13 @@ import axios from 'axios'
 const request = axios.create({
     baseURL:'http://127.0.0.1:8800' //请求的基础路径
 })
+// 请求拦截器
+request.interceptors.request.use(config=>{
+    // 所有请求会经过这里 config当前请求的配置信息
+    return config
+},error=>{
+    // 失败后会经过这里
+    return Promise.reject(error)
+})
 // 导出模块
 export default request
