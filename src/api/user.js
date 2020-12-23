@@ -16,10 +16,27 @@ export const getUserMessage =() => {
 }
 
   //   获取字段goodsType对的商品名字信息进行搜索
-  export const SearchGoodsType =(data) => {
+export const SearchGoodsType =(data) => {
     return  request({
         method: "POST",
         url: "/SearchGoodsType",
         data
+    })
+}
+
+  //   根据商品时间获取商品的所有信息
+export const dateSearchGoodsType =(data) => {
+    return  request({
+        method: "POST",
+        url: "/dateSearch",
+        data
+    })
+}
+
+// 根据goods_id删除商品
+export const deleteGoods =(id) => {
+    return  request({
+        method: "DELETE",
+        url: `/goodsDetail/${id}`,
     })
 }

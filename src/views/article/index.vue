@@ -7,9 +7,10 @@
         <el-breadcrumb-item>活动管理</el-breadcrumb-item>
       </el-breadcrumb>
       <div class="article_form">
-          <div class="article_filter">
-              <i class="iconfont iconxuanze"></i>
-              商品筛选条件</div>
+        <div class="article_filter">
+          <i class="iconfont iconxuanze"></i>
+          商品筛选条件
+        </div>
         <!-- from -->
         <el-form
           ref="form"
@@ -40,7 +41,6 @@
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 @change="changeDate"
-                :disabled="GoodsType !== ''?false:true"
               >
               </el-date-picker>
             </el-col>
@@ -72,6 +72,10 @@
         border
         :header-cell-style="{ 'text-align': 'center' }"
         :cell-style="{ 'text-align': 'center' }"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
       >
         <el-table-column prop="goods_id" label="商品id"> </el-table-column>
         <el-table-column prop="goods_name" label="商品名称"> </el-table-column>
@@ -82,11 +86,16 @@
         </el-table-column>
         <el-table-column prop="goods_big_logo" label="商品图片">
           <template slot-scope="scope">
-            <img
+            <el-image
+              fit="cover"
               :src="scope.row.goods_big_logo"
-              alt=""
-              style="width: 50px; heigth: 50px"
-            />
+              style="width: 100%; heigth: 50px"
+              lazy
+            >
+              <div slot="placeholder" class="image-slot">
+                加载中<span class="dot">...</span>
+              </div>
+            </el-image>
           </template>
         </el-table-column>
         <el-table-column prop="goods_price" label="商品价格"> </el-table-column>
@@ -125,7 +134,12 @@
   </div>
 </template>
 <script>
-import { getUserMessage, SearchGoodsType } from "@/api/user.js";
+import {
+  getUserMessage,
+  SearchGoodsType,
+  dateSearchGoodsType,
+  deleteGoods
+} from "@/api/user.js";
 
 import moment from "moment"; //导入文件
 export default {
@@ -136,7 +150,7 @@ export default {
     return {
       selectVal: "",
       selectValList: [
-          "",
+        "",
         "曲面电视",
         "海信",
         "夏普",
@@ -167,6 +181,8 @@ export default {
       total: 0,
       curPage: 1,
       pageSize: 10,
+      // 加载中
+      loading: true,
     };
   },
   mounted() {
@@ -176,8 +192,25 @@ export default {
     handleEdit(index, row) {
       console.log(index, row);
     },
+    // 删除操作
     handleDelete(index, row) {
-      console.log(index, row);
+      this.$confirm('此操作将永久删除该商品, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.deleteGoods(index + 1)
+          this.getGoods()
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
     },
     // 获取商品的所有信息
     getGoods() {
@@ -187,9 +220,11 @@ export default {
           return;
         }
         this.OrginList = res.data.message;
+        this.loading = false;
         this.handleFilter();
       });
     },
+    // 根据商品类型获取商品的所有信息
     getGoodsType() {
       SearchGoodsType(this.GoodsTypeData).then((res) => {
         if (res.data.err_code !== 0) {
@@ -197,8 +232,27 @@ export default {
           return;
         }
         this.OrginList = res.data.message;
+        this.loading = false;
         this.handleFilter();
       });
+    },
+    // 根据商品时间获取商品的所有信息
+    getDateSearch() {
+      dateSearchGoodsType(this.GoodsTypeData).then((res) => {
+        if (res.data.err_code !== 0) {
+          console.log("获取信息失败");
+          return;
+        }
+        this.OrginList = res.data.message;
+        this.loading = false;
+        this.handleFilter();
+      });
+    },
+    // 根据goods_id删除商品
+    deleteGoods(id){
+      deleteGoods(id).then(res => {
+        console.log(res);
+      })
     },
     // 分页功能
     handleFilter() {
@@ -246,6 +300,13 @@ export default {
         }
         this.getGoodsType();
         console.log("已选择类型");
+      } else if (this.startTime !== "" && this.endTime !== "") {
+        this.GoodsTypeData = {
+          startTime: this.startTime,
+          endTime: this.endTime,
+        };
+        this.getDateSearch();
+        console.log("已选择时间类型");
       } else {
         this.getGoods();
         console.log("类型为空");
@@ -259,9 +320,15 @@ export default {
     },
     //获取时间
     changeDate(e) {
+      console.log(e);
       //  moment(this.date).format("dddd")
-      this.startTime = moment(e[0]).format("YYYY-MM-DD h:mm:ss");
-      this.endTime = moment(e[1]).format("YYYY-MM-DD h:mm:ss");
+      if (e !== null) {
+        this.startTime = moment(e[0]).format("YYYY-MM-DD h:mm:ss");
+        this.endTime = moment(e[1]).format("YYYY-MM-DD h:mm:ss");
+      } else {
+        this.startTime = "";
+        this.endTime = "";
+      }
     },
   },
 };
@@ -275,9 +342,9 @@ export default {
     box-shadow: 2px 2px 2px 2px #cccccc;
     .article_form {
       padding-top: 10px;
-      .article_filter{
-          color: rgb(241, 43, 43);
-          margin-bottom: 10px;
+      .article_filter {
+        color: rgb(241, 43, 43);
+        margin-bottom: 10px;
       }
     }
     .el-breadcrumb {
