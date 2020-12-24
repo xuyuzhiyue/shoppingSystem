@@ -114,6 +114,7 @@ export default {
   },
   mounted() {
     this.getRotationChart();
+    // console.log(this.$store.state.AllGoods,'11');
   },
   methods: {
     // 接口查询

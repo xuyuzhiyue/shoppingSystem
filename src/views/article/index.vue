@@ -255,6 +255,9 @@ export default {
           console.log("获取信息失败");
           return;
         }
+        // 将所哟的商品放在store
+        this.$store.commit('addAllGoods',res.data.message)
+
         this.OrginList = res.data.message;
         this.loading = false;
         this.handleFilter();
