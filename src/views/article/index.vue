@@ -4,7 +4,7 @@
         <!-- 面包屑 -->
         <el-breadcrumb separator-class="el-icon-arrow-right article_breadcrumb">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>内容管理</el-breadcrumb-item>
+          <el-breadcrumb-item>所有商品</el-breadcrumb-item>
         </el-breadcrumb>
         <div class="article_form">
           <div class="article_filter">
@@ -81,7 +81,7 @@
           <el-table-column prop="goods_name" label="商品名称">
           </el-table-column>
           <el-table-column prop="goodsType" label="商品类型"> </el-table-column>
-          <el-table-column prop="cat_type" label="商品大项类型">
+          <el-table-column prop="cat_type" label="商品大类型">
           </el-table-column>
           <el-table-column prop="goods_number" label="商品数量">
           </el-table-column>

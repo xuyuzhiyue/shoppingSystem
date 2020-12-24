@@ -49,3 +49,45 @@ export const insertGoodsDetail =(data) => {
         data
     })
 }
+
+// 查询轮播图商品
+export const RotationChart =() => {
+    return  request({
+        url: '/rotationChart'
+    })
+}
+// 根据goods_id删除轮播图商品
+export const deleteRotationChart =(id) => {
+    return  request({
+        method: "DELETE",
+        url: `/rotationChart/${id}`,
+    })
+}
+
+// 查询综合商品
+export const Comprehensive =() => {
+    return  request({
+        url: '/comprehensive'
+    })
+}
+// 根据goods_id删除综合商品
+export const deleteComprehensive =(id) => {
+    return  request({
+        method: "DELETE",
+        url: `/comprehensive/${id}`,
+    })
+}
+
+// 查询商品类型
+export const Allgoods =() => {
+    return  request({
+        url: '/allgoodsType'
+    })
+}
+// 根据cat_id删除商品类型
+export const deleteAllgoods =(id) => {
+    return  request({
+        method: "DELETE",
+        url: `/allgoodsType/${id}`,
+    })
+}

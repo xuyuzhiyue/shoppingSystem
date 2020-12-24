@@ -31,9 +31,17 @@
             <i class="iconfont iconall"></i>
             <span slot="title">所有商品管理</span>
           </el-menu-item>
+          <el-menu-item index="/allgoods">
+            <i class="iconfont iconshilileixing"></i>
+            <span slot="title">商品类型管理</span>
+          </el-menu-item>
           <el-menu-item index="/rotationchart">
             <i class="iconfont iconlunbotu"></i>
             <span slot="title">轮播图管理</span>
+          </el-menu-item>
+          <el-menu-item index="/comprehensive">
+            <i class="iconfont iconzonghesuzhipingjia"></i>
+            <span slot="title">综合商品管理</span>
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>

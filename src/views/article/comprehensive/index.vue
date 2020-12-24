@@ -1,18 +1,18 @@
 <template>
-  <div class="rotationchart">
+  <div class="comprehensive">
     <el-card class="box-card">
-      <div class="rotationchart_breadcrumb">
+      <div class="comprehensive_breadcrumb">
         <!-- 面包屑 -->
         <el-breadcrumb separator-class="el-icon-arrow-right article_breadcrumb">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>轮播图</el-breadcrumb-item>
+          <el-breadcrumb-item>综合商品</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="rotationchart_table_title">
+      <div class="comprehensive_table_title">
         <i class="iconfont iconxuanze"></i>
         商品筛选条件
       </div>
-      <div class="rotationchart_check">
+      <div class="comprehensive_check">
         <el-input
           size="medium"
           v-model="searchString"
@@ -21,7 +21,7 @@
         />
         <el-button type="primary" @click="handleQuery">查询</el-button>
       </div>
-      <div class="rotationchart_table">
+      <div class="comprehensive_table">
         <div class="article_bottom_title">
           <span>筛选后的数据内容 : </span>
           <span
@@ -30,7 +30,7 @@
             }}条</span
           >
         </div>
-        <div class="rotationchart_table_contain">
+        <div class="comprehensive_table_contain">
           <el-table
             :data="tableData"
             style="width: 100%"
@@ -38,7 +38,7 @@
             :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }"
           >
-                      <el-table-column prop="goods_id" label="商品名称">
+            <el-table-column prop="goods_id" label="商品id">
             </el-table-column>
             <el-table-column prop="goods_name" label="商品名称">
             </el-table-column>
@@ -46,11 +46,15 @@
             </el-table-column>
             <el-table-column prop="cat_type" label="商品大类型">
             </el-table-column>
-            <el-table-column prop="image_src" label="商品图片">
+            <el-table-column prop="hot_number" label="商品数量">
+            </el-table-column>
+            <el-table-column prop="goods_price" label="商品价格">
+            </el-table-column>
+            <el-table-column prop="goods_small_logo" label="商品图片">
               <template slot-scope="scope">
                 <el-image
                   fit="cover"
-                  :src="scope.row.image_src"
+                  :src="scope.row.goods_small_logo"
                   style="width: 50%; heigth: 50px"
                   lazy
                 >
@@ -60,26 +64,31 @@
                 </el-image>
               </template>
             </el-table-column>
-             <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                type="primary"
-                @click="handleEdit(scope.$index, scope.row)"
-                circle
-                icon="el-icon-edit"
-              ></el-button>
-              <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.$index, scope.row)"
-                circle
-                icon="el-icon-delete"
-              ></el-button>
-            </template>
-          </el-table-column>
+            <el-table-column prop="image_src" label="商品视频">
+              <template slot-scope="scope">
+                <video  style="width: 100%; heigth:100%" :src="scope.row.image_src" controls="controls"></video>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  type="primary"
+                  @click="handleEdit(scope.$index, scope.row)"
+                  circle
+                  icon="el-icon-edit"
+                ></el-button>
+                <el-button
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.$index, scope.row)"
+                  circle
+                  icon="el-icon-delete"
+                ></el-button>
+              </template>
+            </el-table-column>
           </el-table>
-          <div class="rotationchart_pagination">
+          <div class="comprehensive_pagination">
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
@@ -97,9 +106,9 @@
   </div>
 </template>
 <script>
-import { RotationChart,deleteRotationChart } from "@/api/user.js";
+import { Comprehensive,deleteComprehensive } from "@/api/user.js";
 export default {
-  name: "rotationchart",
+  name: "comprehensive",
   components: {},
   props: {},
   data() {
@@ -113,19 +122,20 @@ export default {
     };
   },
   mounted() {
-    this.getRotationChart();
+    this.getComprehensive();
   },
   methods: {
-    // 接口查询
-    getRotationChart() {
-      RotationChart().then((res) => {
+    // 查询接口
+    getComprehensive() {
+      Comprehensive().then((res) => {
+        console.log(res);
         this.OrginList = res.data.message;
         this.handleFilter();
       });
     },
     // 删除接口
-    getDeleteRotationChart(id){
-      deleteRotationChart(id).then(res=>{
+    getdeleteComprehensive(id){
+      deleteComprehensive(id).then(res=>{
         console.log(res);
       })
     },
@@ -180,8 +190,8 @@ export default {
             type: "success",
             message: "删除成功!",
           });
-          this.getDeleteRotationChart(id)
-          this.getRotationChart();
+          this.getdeleteComprehensive(id)
+          this.getComprehensive();
         })
         .catch(() => {
           this.$message({
@@ -194,29 +204,29 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-.rotationchart {
+.comprehensive {
   padding: 20px;
-  .rotationchart_breadcrumb {
+  .comprehensive_breadcrumb {
     border-bottom: 1px solid #cccccc;
     padding-bottom: 20px;
   }
-  .rotationchart_check {
+  .comprehensive_check {
     margin-top: 20px;
     .el-button--primary {
       margin-left: 20px;
     }
   }
 
-  .rotationchart_table_title {
+  .comprehensive_table_title {
     margin: 20px 0;
     color: #f12b2b;
   }
-  .rotationchart_table {
-    .article_bottom_title{
+  .comprehensive_table {
+    .article_bottom_title {
       margin: 20px 0;
     }
   }
-  .rotationchart_pagination {
+  .comprehensive_pagination {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;

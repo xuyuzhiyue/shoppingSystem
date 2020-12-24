@@ -6,6 +6,8 @@ import Layout from '@/views/layout'
 import Article from '@/views/article' 
 import Publish from '@/views/publish' 
 import Rotationchart from '@/views/article/rotationchart'
+import Comprehensive from '@/views/article/comprehensive'
+import Allgoods from '@/views/article/allgoods'
 
 Vue.use(VueRouter)
 
@@ -46,6 +48,16 @@ const routes = [
         path:'/rotationchart',
         name:'rotationchart',
         component:Rotationchart
+      },
+      {
+        path:'/comprehensive',
+        name:'comprehensive',
+        component:Comprehensive
+      },
+      {
+        path:'/allgoods',
+        name:'allgoods',
+        component:Allgoods
       },
       {
         path:'/publish',
