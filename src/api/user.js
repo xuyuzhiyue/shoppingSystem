@@ -40,3 +40,12 @@ export const deleteGoods =(id) => {
         url: `/goodsDetail/${id}`,
     })
 }
+
+// 添加商品
+export const insertGoodsDetail =(data) => {
+    return  request({
+        method: "POST",
+        url: '/goodsDetail',
+        data
+    })
+}

@@ -1,7 +1,7 @@
 <template>
   <div class="aside">
     <el-menu
-      default-active="/"
+      :default-active="this.$route.path"
       class="aside-menu"
       background-color="#002033"
       text-color="#fff"
@@ -11,23 +11,40 @@
     >
       <div class="aside_title">
         <i class="iconfont icondwg"></i>
-        <span v-if="!isCollapse">购物袋-商城</span> 
+        <span v-if="!isCollapse">购物袋-商城</span>
       </div>
       <el-menu-item index="/">
         <i class="iconfont iconshouye"></i>
         <span slot="title">首页</span>
       </el-menu-item>
-      <el-menu-item index="/article">
+      <!-- <el-menu-item index="/article">
         <i class="iconfont iconneirongzixunmoren-"></i>
         <span slot="title">内容管理</span>
-      </el-menu-item>
+      </el-menu-item> -->
+      <el-submenu index="/article">
+        <template slot="title">
+          <i class="iconfont iconneirongzixunmoren-"></i>
+          <span slot="title">内容管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/article">
+            <i class="iconfont iconall"></i>
+            <span slot="title">所有商品管理</span>
+          </el-menu-item>
+          <el-menu-item index="/rotationchart">
+            <i class="iconfont iconlunbotu"></i>
+            <span slot="title">轮播图管理</span>
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+
       <el-menu-item index="/image">
         <i class="iconfont iconsucai"></i>
         <span slot="title">素材管理</span>
       </el-menu-item>
       <el-menu-item index="/publish">
         <i class="iconfont iconpublish"></i>
-        <span slot="title">发布文章</span>
+        <span slot="title">发布管理</span>
       </el-menu-item>
       <el-menu-item index="/comment">
         <i class="iconfont iconpinglun"></i>
@@ -48,10 +65,9 @@
 export default {
   name: "asideIndex",
   components: {},
-  props: ['isCollapse'],
+  props: ["isCollapse"],
   data() {
-    return {
-    };
+    return {};
   },
   methods: {},
 };
@@ -73,7 +89,8 @@ export default {
     }
   }
 }
-/deep/    .horizontal-collapse-transition { 
-        transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out; 
-    } 
+/deep/ .horizontal-collapse-transition {
+  transition: 0s width ease-in-out, 0s padding-left ease-in-out,
+    0s padding-right ease-in-out;
+}
 </style>

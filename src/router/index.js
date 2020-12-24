@@ -4,6 +4,8 @@ import Login from '@/views/login'
 import Home from '@/views/home'
 import Layout from '@/views/layout'
 import Article from '@/views/article' 
+import Publish from '@/views/publish' 
+import Rotationchart from '@/views/article/rotationchart'
 
 Vue.use(VueRouter)
 
@@ -27,7 +29,28 @@ const routes = [
       },{
         path:'/article',
         name:'article',
-        component:Article
+        component:Article,
+      },
+      // {
+      //   path:'/article',
+      //   component:Layout,
+      //   children:[
+      //     {
+      //       path:'/article/rotationchart',
+      //       name:'rotationchart',
+      //       component:Rotationchart
+      //     }
+      //   ]
+      // }
+      {
+        path:'/rotationchart',
+        name:'rotationchart',
+        component:Rotationchart
+      },
+      {
+        path:'/publish',
+        name:'publish',
+        component:Publish
       }
     ]
   },

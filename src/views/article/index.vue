@@ -1,136 +1,138 @@
 <template>
   <div class="article">
-    <div class="article_top">
-      <!-- 面包屑 -->
-      <el-breadcrumb separator-class="el-icon-arrow-right article_breadcrumb">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      </el-breadcrumb>
-      <div class="article_form">
-        <div class="article_filter">
-          <i class="iconfont iconxuanze"></i>
-          商品筛选条件
-        </div>
-        <!-- from -->
-        <el-form
-          ref="form"
-          label-width="80px"
-          class="article_form"
-          label-position="left"
-        >
-          <el-form-item label="商品类型">
-            <el-select
-              v-model="selectVal"
-              placeholder="请选择活动区域"
-              @change="changeVal"
-            >
-              <el-option
-                :label="item"
-                :value="item"
-                v-for="(item, index) in selectValList"
-                :key="index"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="商品发布时间">
-            <el-col :span="11">
-              <el-date-picker
-                v-model="date"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                @change="changeDate"
+      <div class="article_top">
+        <!-- 面包屑 -->
+        <el-breadcrumb separator-class="el-icon-arrow-right article_breadcrumb">
+          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>内容管理</el-breadcrumb-item>
+        </el-breadcrumb>
+        <div class="article_form">
+          <div class="article_filter">
+            <i class="iconfont iconxuanze"></i>
+            商品筛选条件
+          </div>
+          <!-- from -->
+          <el-form
+            ref="form"
+            label-width="100px"
+            class="article_form"
+            label-position="left"
+          >
+            <el-form-item label="商品类型">
+              <el-select
+                v-model="selectVal"
+                placeholder="请选择活动区域"
+                @change="changeVal"
               >
-              </el-date-picker>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="商品名称">
-            <el-input
-              size="medium"
-              v-model="searchString"
-              style="width: 250px"
-              placeholder="请输入关键字搜索"
-            />
-            <el-button type="primary" @click="handleQuery">查询</el-button>
-          </el-form-item>
-        </el-form>
+                <el-option
+                  :label="item"
+                  :value="item"
+                  v-for="(item, index) in selectValList"
+                  :key="index"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="商品发布时间">
+              <el-col :span="11">
+                <el-date-picker
+                  v-model="date"
+                  type="daterange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  @change="changeDate"
+                >
+                </el-date-picker>
+              </el-col>
+            </el-form-item>
+            <el-form-item label="商品名称">
+              <el-input
+                size="medium"
+                v-model="searchString"
+                style="width: 250px"
+                placeholder="请输入关键字搜索"
+              />
+              <el-button type="primary" @click="handleQuery">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
-    </div>
-    <div class="table">
-      <div class="article_bottom_title">
-        <span>筛选后的数据内容 : </span>
-        <span
-          >{{ searchString }} 总计{{ total }}条数据，本页共{{
-            tableData.length
-          }}条</span
+      <div class="table">
+        <div class="article_bottom_title">
+          <span>筛选后的数据内容 : </span>
+          <span
+            >{{ searchString }} 总计{{ total }}条数据，本页共{{
+              tableData.length
+            }}条</span
+          >
+        </div>
+        <el-table
+          :data="tableData"
+          style="width: 100%"
+          border
+          :header-cell-style="{ 'text-align': 'center' }"
+          :cell-style="{ 'text-align': 'center' }"
+          v-loading="loading"
+          element-loading-text="拼命加载中"
+          element-loading-spinner="el-icon-loading"
+          element-loading-background="rgba(0, 0, 0, 0.8)"
         >
+          <el-table-column prop="goods_id" label="商品id"> </el-table-column>
+          <el-table-column prop="goods_name" label="商品名称">
+          </el-table-column>
+          <el-table-column prop="goodsType" label="商品类型"> </el-table-column>
+          <el-table-column prop="cat_type" label="商品大项类型">
+          </el-table-column>
+          <el-table-column prop="goods_number" label="商品数量">
+          </el-table-column>
+          <el-table-column prop="goods_small_logo" label="商品图片">
+            <template slot-scope="scope">
+              <el-image
+                fit="cover"
+                :src="scope.row.goods_small_logo"
+                style="width: 100%; heigth: 50px"
+                lazy
+              >
+                <div slot="placeholder" class="image-slot">
+                  加载中<span class="dot">...</span>
+                </div>
+              </el-image>
+            </template>
+          </el-table-column>
+          <el-table-column prop="goods_price" label="商品价格">
+          </el-table-column>
+          <el-table-column prop="hot_munber" label="商品热销数">
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                type="primary"
+                @click="handleEdit(scope.$index, scope.row)"
+                circle
+                icon="el-icon-edit"
+              ></el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDelete(scope.$index, scope.row)"
+                circle
+                icon="el-icon-delete"
+              ></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="curPage"
+          :page-sizes="[10, 20, 30, 40, 50, 100]"
+          :page-size="pageSize"
+          :total="total"
+          layout="sizes,prev,pager,next"
+        >
+        </el-pagination>
       </div>
-      <el-table
-        :data="tableData"
-        style="width: 100%"
-        border
-        :header-cell-style="{ 'text-align': 'center' }"
-        :cell-style="{ 'text-align': 'center' }"
-        v-loading="loading"
-        element-loading-text="拼命加载中"
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-      >
-        <el-table-column prop="goods_id" label="商品id"> </el-table-column>
-        <el-table-column prop="goods_name" label="商品名称"> </el-table-column>
-        <el-table-column prop="goodsType" label="商品类型"> </el-table-column>
-        <el-table-column prop="cat_type" label="商品大项类型">
-        </el-table-column>
-        <el-table-column prop="goods_number" label="商品数量">
-        </el-table-column>
-        <el-table-column prop="goods_big_logo" label="商品图片">
-          <template slot-scope="scope">
-            <el-image
-              fit="cover"
-              :src="scope.row.goods_big_logo"
-              style="width: 100%; heigth: 50px"
-              lazy
-            >
-              <div slot="placeholder" class="image-slot">
-                加载中<span class="dot">...</span>
-              </div>
-            </el-image>
-          </template>
-        </el-table-column>
-        <el-table-column prop="goods_price" label="商品价格"> </el-table-column>
-        <el-table-column prop="hot_mumber" label="商品热销数">
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary"
-              @click="handleEdit(scope.$index, scope.row)"
-              circle
-              icon="el-icon-edit"
-            ></el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
-              circle
-              icon="el-icon-delete"
-            ></el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="curPage"
-        :page-sizes="[10, 20, 30, 40, 50, 100]"
-        :page-size="pageSize"
-        :total="total"
-        layout="sizes,prev,pager,next"
-      >
-      </el-pagination>
-    </div>
   </div>
 </template>
 <script>
@@ -138,7 +140,7 @@ import {
   getUserMessage,
   SearchGoodsType,
   dateSearchGoodsType,
-  deleteGoods
+  deleteGoods,
 } from "@/api/user.js";
 
 import moment from "moment"; //导入文件
@@ -166,6 +168,38 @@ export default {
         "移动空调",
         "海尔",
         "三菱重工",
+        "滚筒洗衣机",
+        "波轮洗衣机",
+        "大容量洗衣机",
+        "迷你洗衣机",
+        "双缸洗衣机",
+        "干衣机",
+        "洗衣机服务",
+        "对开门冰箱",
+        "多门冰箱",
+        "三门冰箱",
+        "十字对开门",
+        "商用冷柜",
+        "双门冰箱",
+        "西门子",
+        "护肤套装",
+        "面膜",
+        "巧克力",
+        "儿童玩具",
+        "平板电脑",
+        "童装童鞋",
+        "笔记本",
+        "苹果手机",
+        "巴黎水",
+        "爱他美",
+        "花王",
+        "戴森",
+        "ReFa",
+        "童车童床",
+        "营养辅食",
+        "婴儿用品",
+        "婴儿洗护",
+        "童装童鞋",
       ],
       GoodsType: "",
       GoodsTypeData: {},
@@ -194,22 +228,24 @@ export default {
     },
     // 删除操作
     handleDelete(index, row) {
-      this.$confirm('此操作将永久删除该商品, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+      this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
           this.$message({
-            type: 'success',
-            message: '删除成功!'
+            type: "success",
+            message: "删除成功!",
           });
-          this.deleteGoods(index + 1)
-          this.getGoods()
-        }).catch(() => {
+          this.deleteGoods(index + 1);
+          this.getGoods();
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+            type: "info",
+            message: "已取消删除",
+          });
         });
     },
     // 获取商品的所有信息
@@ -249,10 +285,10 @@ export default {
       });
     },
     // 根据goods_id删除商品
-    deleteGoods(id){
-      deleteGoods(id).then(res => {
+    deleteGoods(id) {
+      deleteGoods(id).then((res) => {
         console.log(res);
-      })
+      });
     },
     // 分页功能
     handleFilter() {
@@ -353,6 +389,9 @@ export default {
     }
     .el-button--primary {
       margin-left: 20px;
+    }
+    .el-card {
+      margin: 20px;
     }
   }
   .table {
