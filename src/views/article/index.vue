@@ -256,7 +256,8 @@ export default {
           return;
         }
         // 将所哟的商品放在store
-        this.$store.commit('addAllGoods',res.data.message)
+        // this.$store.commit('addAllGoods',res.data.message)  //mutations
+           this.$store.dispatch('addAllGoods',res.data.message)  //actions
 
         this.OrginList = res.data.message;
         this.loading = false;

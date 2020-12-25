@@ -50,10 +50,37 @@
         <i class="iconfont iconsucai"></i>
         <span slot="title">素材管理</span>
       </el-menu-item>
-      <el-menu-item index="/publish">
+
+       <el-submenu index="/publish">
+        <template slot="title">
+          <i class="iconfont iconneirongzixunmoren-"></i>
+          <span slot="title">发布管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/publish">
+            <i class="iconfont iconall"></i>
+            <span slot="title">所有商品发布</span>
+          </el-menu-item>
+          <el-menu-item index="/allgoodsPublish">
+            <i class="iconfont iconshilileixing"></i>
+            <span slot="title">商品类型发布</span>
+          </el-menu-item>
+          <el-menu-item index="">
+            <i class="iconfont iconlunbotu"></i>
+            <span slot="title">轮播图发布</span>
+          </el-menu-item>
+          <el-menu-item index="">
+            <i class="iconfont iconzonghesuzhipingjia"></i>
+            <span slot="title">综合商品发布</span>
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+
+
+      <!-- <el-menu-item index="/publish">
         <i class="iconfont iconpublish"></i>
         <span slot="title">发布管理</span>
-      </el-menu-item>
+      </el-menu-item> -->
       <el-menu-item index="/comment">
         <i class="iconfont iconpinglun"></i>
         <span slot="title">评论管理</span>

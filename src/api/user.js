@@ -91,3 +91,12 @@ export const deleteAllgoods =(id) => {
         url: `/allgoodsType/${id}`,
     })
 }
+//添加商品类型
+export const addAllgoodsType =(data) => {
+    return  request({
+        method: "POST",
+        url: '/allgoodsType',
+        data
+    })
+}
+

@@ -38,7 +38,7 @@
             :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }"
           >
-                      <el-table-column prop="goods_id" label="商品名称">
+            <el-table-column prop="goods_id" label="商品id">
             </el-table-column>
             <el-table-column prop="goods_name" label="商品名称">
             </el-table-column>
@@ -60,24 +60,24 @@
                 </el-image>
               </template>
             </el-table-column>
-             <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                type="primary"
-                @click="handleEdit(scope.$index, scope.row)"
-                circle
-                icon="el-icon-edit"
-              ></el-button>
-              <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.$index, scope.row)"
-                circle
-                icon="el-icon-delete"
-              ></el-button>
-            </template>
-          </el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  type="primary"
+                  @click="handleEdit(scope.$index, scope.row)"
+                  circle
+                  icon="el-icon-edit"
+                ></el-button>
+                <el-button
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.$index, scope.row)"
+                  circle
+                  icon="el-icon-delete"
+                ></el-button>
+              </template>
+            </el-table-column>
           </el-table>
           <div class="rotationchart_pagination">
             <el-pagination
@@ -97,7 +97,7 @@
   </div>
 </template>
 <script>
-import { RotationChart,deleteRotationChart } from "@/api/user.js";
+import { RotationChart, deleteRotationChart } from "@/api/user.js";
 export default {
   name: "rotationchart",
   components: {},
@@ -125,10 +125,10 @@ export default {
       });
     },
     // 删除接口
-    getDeleteRotationChart(id){
-      deleteRotationChart(id).then(res=>{
+    getDeleteRotationChart(id) {
+      deleteRotationChart(id).then((res) => {
         console.log(res);
-      })
+      });
     },
     // 点击查询
     handleQuery() {
@@ -165,12 +165,12 @@ export default {
       this.handleFilter();
     },
     // 编辑操作
-        handleEdit(index, row) {
+    handleEdit(index, row) {
       // console.log(index, row);
     },
     // 删除操作
     handleDelete(index, row) {
-      let id =  row.goods_id
+      let id = row.goods_id;
       this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -181,7 +181,7 @@ export default {
             type: "success",
             message: "删除成功!",
           });
-          this.getDeleteRotationChart(id)
+          this.getDeleteRotationChart(id);
           this.getRotationChart();
         })
         .catch(() => {
@@ -213,7 +213,7 @@ export default {
     color: #f12b2b;
   }
   .rotationchart_table {
-    .article_bottom_title{
+    .article_bottom_title {
       margin: 20px 0;
     }
   }
