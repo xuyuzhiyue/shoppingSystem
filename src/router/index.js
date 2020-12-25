@@ -9,6 +9,7 @@ import Rotationchart from '@/views/article/rotationchart'
 import Comprehensive from '@/views/article/comprehensive'
 import Allgoods from '@/views/article/allgoods'
 import AllgoodsPublish from '@/views/publish/allgoods'
+import RotationchartPublish from '@/views/publish/rotationchart'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ const routes = [
         path:'/allgoodsPublish',
         name:'allgoodsPublish',
         component:AllgoodsPublish
+      },
+      {
+        path:'/rotationchartPublish',
+        name:'rotationchartPublish',
+        component:RotationchartPublish
       }
     ]
   },

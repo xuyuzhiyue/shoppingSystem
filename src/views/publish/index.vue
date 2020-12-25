@@ -395,6 +395,7 @@ export default {
 </script>
 <style lang='less' scoped>
 .publish {
+  padding: 20px;
   .box-card {
     .clearfix {
     }

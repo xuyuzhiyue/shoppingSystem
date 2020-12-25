@@ -63,6 +63,14 @@ export const deleteRotationChart =(id) => {
         url: `/rotationChart/${id}`,
     })
 }
+// 添加轮播图商品
+export const addRotationChart =(data) => {
+    return  request({
+        method: "post",
+        url: `/rotationChart`,
+        data
+    })
+}
 
 // 查询综合商品
 export const Comprehensive =() => {

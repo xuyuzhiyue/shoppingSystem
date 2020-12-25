@@ -65,7 +65,7 @@
             <i class="iconfont iconshilileixing"></i>
             <span slot="title">商品类型发布</span>
           </el-menu-item>
-          <el-menu-item index="">
+          <el-menu-item index="/rotationchartPublish">
             <i class="iconfont iconlunbotu"></i>
             <span slot="title">轮播图发布</span>
           </el-menu-item>
