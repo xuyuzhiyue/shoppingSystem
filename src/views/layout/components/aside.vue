@@ -69,7 +69,7 @@
             <i class="iconfont iconlunbotu"></i>
             <span slot="title">轮播图发布</span>
           </el-menu-item>
-          <el-menu-item index="">
+          <el-menu-item index="/comprehensivePublish">
             <i class="iconfont iconzonghesuzhipingjia"></i>
             <span slot="title">综合商品发布</span>
           </el-menu-item>

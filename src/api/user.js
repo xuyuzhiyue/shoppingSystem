@@ -85,6 +85,15 @@ export const deleteComprehensive =(id) => {
         url: `/comprehensive/${id}`,
     })
 }
+// 添加综合商品
+export const addComprehensive =(data) => {
+    return  request({
+        method: "POST",
+        url: '/comprehensive',
+        data
+    })
+}
+
 
 // 查询商品类型
 export const Allgoods =() => {
