@@ -89,7 +89,7 @@
         <i class="iconfont iconfensi1-copy"></i>
         <span slot="title">粉丝管理</span>
       </el-menu-item>
-      <el-menu-item index="/setting">
+      <el-menu-item index="/user">
         <i class="iconfont iconshezhi"></i>
         <span slot="title">个人设置</span>
       </el-menu-item>

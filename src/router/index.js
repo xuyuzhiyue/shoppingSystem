@@ -81,6 +81,10 @@ const routes = [
         path:'/comprehensivePublish',
         name:'comprehensivePublish',
         component:ComprehensivePublish
+      },{
+        path:'user',
+        name:'user',
+        component:()=> import ('@/views/user/index')
       }
     ]
   },

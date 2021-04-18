@@ -18,7 +18,7 @@
           </div>
           <el-dropdown>
             <div class="layout_wrap">
-              <img class="avatar" :src="userdata.image" alt="" />
+              <img class="avatar"   :src="require('@/assets/'+userdata.image)"  alt="" />
               <span
                 >{{ userdata.name
                 }}<i class="el-icon-arrow-down el-icon--right"></i

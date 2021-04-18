@@ -1,9 +1,25 @@
-// 用户相关的请求模块
+// 管理员登录相关的请求模块
 import request from "@/utils/request";
 export const login =(data) => {
     return  request({
         method: "POST",
         url: "/manageUsers",
+        data
+    })
+}
+
+// 获取管理员所有相关的请求模块
+export const userAllData =(data) => {
+    return  request({
+        url: "/manageUsers"
+    })
+}
+
+// 注销管理员信息
+export const userDelData =(data,id) => {
+    return  request({
+        url: `/manageUsers/${id}`,
+        method:"PUT",
         data
     })
 }
